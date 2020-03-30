@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import CurrencyConversionSelector from './CurrencyConversionSelector';
 
 function CurrencyConversion() {
   const [baseCurrency, setBaseCurrency] = useState("GBP");
-  const [requestedCurrency, setRequestedCurrency] = useState("EUR");
+  const [requestedCurrency, setRequestedCurrency] = useState("USD");
   const [conversionRates, setConversionRates] = useState({});
+
 
   useEffect(() => {
     fetch(`https://api.exchangeratesapi.io/latest?base=${baseCurrency}`)
@@ -11,21 +13,16 @@ function CurrencyConversion() {
       .then(data => setConversionRates(data.rates))
     },[])
 
-    function displayRates(){
-      if (conversionRates.length === 0) return null;
-      for (let latestRate in conversionRates){
-        console.log(conversionRates);
-        return (
-            <li>{latestRate}</li> )
-      }
-    }
+    if (conversionRates.length === 0) return null;
 
     return (
       <section className="currency-conversion">
-        <h3>{baseCurrency} to {requestedCurrency}</h3>
-        <ul>
-        { displayRates() }
-        </ul>
+        <CurrencyConversionSelector
+          baseCurrency={baseCurrency}
+          requestedCurrency={requestedCurrency}
+          conversionRates={conversionRates}
+        />
+        <h4>{conversionRates[requestedCurrency]}</h4>
       </section>
     )
   }
