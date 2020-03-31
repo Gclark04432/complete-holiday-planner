@@ -1,8 +1,20 @@
-import React, {useState} from 'react';
+import React from 'react';
 
-function CountrySelector() {
+const CountrySelector = (props) => {
+  if (!props.countries) return null;
+  const options = props.countries.map(country => {
+    return <option value={country.alpha3Code} key={country.alpha3Code}>{country.name}</option>
+  })
+
+  function handleChange(event) {
+    props.onCountrySelected(event.target.value);
+  }
+
   return (
-    <h5>Country Selector</h5>
+    <select id="country-selector" onChange={handleChange} defaultValue="default">
+      <option disabled value="default">Choose a country...</option>
+      {options}
+    </select>
   )
 }
 

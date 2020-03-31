@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import CurrencyConversionSelector from './CurrencyConversionSelector';
 
 function CurrencyConversion() {
   const [baseCurrency, setBaseCurrency] = useState("GBP");
@@ -17,11 +16,6 @@ function CurrencyConversion() {
 
     return (
       <section className="currency-conversion">
-        <CurrencyConversionSelector
-          baseCurrency={baseCurrency}
-          requestedCurrency={requestedCurrency}
-          conversionRates={conversionRates}
-        />
         <h4>{conversionRates[requestedCurrency]}</h4>
       </section>
     )
